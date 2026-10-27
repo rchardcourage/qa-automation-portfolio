@@ -1,68 +1,67 @@
-# Enterprise QA Automation Portfolio
+# QA Automation Portfolio
 
-[![Playwright](https://img.shields.io/badge/Playwright-E2E%20Testing-3A9B48.svg?logo=playwright)](#)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict%20Mode-3178C6.svg?logo=typescript)](#)
-[![CI/CD](https://img.shields.io/badge/GitHub%20Actions-Continuous%20Testing-2088FF.svg?logo=github-actions)](#)
-[![Architecture](https://img.shields.io/badge/Architecture-Page%20Object%20Model-orange.svg)](#)
+[![Playwright E2E Tests](https://github.com/rchardcourage/qa-automation-portfolio/actions/workflows/e2e-tests.yml/badge.svg)](https://github.com/rchardcourage/qa-automation-portfolio/actions/workflows/e2e-tests.yml)
 
-> **Lead QA / Senior Test Automation Engineer:** Richard Courage Udoh  
-> **Portfolio Showcase:** Scalable, enterprise-grade test automation architecture designed for complex, cross-module platforms.
+Playwright and TypeScript automation by **Richard Courage**, QA Lead. It tests **PayVault**, a small fintech demo app bundled in this repo (wallet transfers, loan applications, admin approvals), so every test can be run, read and verified by anyone who clones it. PayVault is purpose-built for this portfolio. It is not a client product, and it holds no real money or data.
 
----
+**46 tests · UI + API + access control · Chromium, Firefox and WebKit · type-checked · runs in CI on every push**
 
-## 1. Executive Summary
-This repository showcases an end-to-end automated test engineering framework built with **TypeScript**, **Playwright**, and **GitHub Actions**. It reflects modern enterprise QA best practices:
-
-- **Page Object Model (POM)** for resilient, maintainable locator abstraction.
-- **Risk-Based Testing (RBT)** prioritizing tests based on Impact $\times$ Likelihood.
-- **Dual-Track Testing Strategy**: Seamlessly balancing automated headless regression with governed human-in-the-loop audit verification.
-- **Cross-Browser & Responsive Validation**: Automated matrix across Chromium, Firefox, and WebKit.
-- **Production-Grade CI/CD Pipelines**: Automated regression runs with HTML artifact reporting and trace recording on failure.
-
----
-
-## 2. Framework Architecture
-
-```text
-qa-automation-portfolio/
-├── .github/workflows/           # CI/CD Automated Test Pipeline
-│   └── e2e-tests.yml
-├── docs/                        # QA Strategy & Engineering Architecture
-│   └── RISK_BASED_TESTING_STRATEGY.md
-├── src/
-│   ├── core/                    # Reusable framework utilities & base classes
-│   │   ├── BasePage.ts          # Root POM with resilient waiting mechanisms
-│   │   └── env.ts               # Environment & configuration management
-│   └── modules/                 # Modular domain-driven test suites
-│       └── governance-hub/      # Enterprise Governance & Posture Module
-│           ├── pages/           # Encapsulated Page Objects
-│           └── tests/           # Executable Playwright specs (@smoke, @sanity)
-├── reports/                     # HTML & JSON test artifacts
-├── playwright.config.ts         # Multi-browser & viewport configuration
-└── tsconfig.json                # Strict TypeScript compilation config
-```
-
----
-
-## 3. Quick Start & Execution
+## Run it
 
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run high-priority Smoke Suite
-npm run test:smoke
-
-# 3. Run full multi-browser test suite
-npm test
-
-# 4. View interactive HTML report with trace viewer
-npm run report
+npm ci
+npx playwright install        # one-time browser download
+npm test                      # starts the demo app automatically
+npm run report                # open the HTML report (traces, screenshots, video on failure)
 ```
 
----
+Useful subsets: `npm run test:smoke`, `test:sanity`, `test:regression`, `test:api`.
 
-## 4. Key Highlights for Hiring Managers
-- **Zero Flakiness Locator Policy**: Prefers user-facing accessibility locators (`getByRole`, `getByPlaceholder`) and persistent `data-testid` attributes over fragile XPath selectors.
-- **Trace Viewer Integration**: Failed tests automatically capture execution traces, DOM snapshots, network payloads, and videos for immediate root-cause analysis.
-- **Mathematical Business Logic Verification**: Verifies complex deterministic calculations (e.g., scoring caps, risk matrices) directly against business requirements.
+## What is covered
+
+| Area | Tests | Examples |
+|---|---|---|
+| Authentication and sessions | 8 | generic error on bad credentials (no user enumeration), lock after 3 failures, sign-out, expired session redirect |
+| Wallet transfers | 13 | balance maths, ₦100 minimum and ₦300,000 daily-limit boundaries, insufficient funds, self-transfer, unknown recipient |
+| Loans | 12 | repayment calculation (data-driven), amount and tenure boundaries, KYC gate, duplicate application |
+| Access control and E2E | 4 | customers cannot reach admin pages, customer applies → admin approves → wallet credited |
+| REST API | 9 | auth (401/403), response shape, idempotency keys, malformed JSON, type and precision validation, double approval (409) |
+
+Tests carry `@smoke`, `@sanity`, `@regression` and `@api` tags, so a quick pre-release gate and a full regression run use the same suite.
+
+## How it is built
+
+- **Page Object Model** in `src/pages`: locators and actions live in one place; specs read like the test case. Locators prefer roles and labels, with `data-testid` where text is not stable.
+- **Isolated tests**: an auto fixture resets the app before every test, and tests sign in through the API so UI tests stay focused on what they check.
+- **Money handled carefully**: the app stores kobo as integers; tests assert exact formatted amounts and boundary values (₦99.99, ₦100, ₦300,000, ₦300,000 + 1 transfer).
+- **Risk-based**: depth follows risk. See [docs/RISK_BASED_TESTING_STRATEGY.md](docs/RISK_BASED_TESTING_STRATEGY.md).
+- **CI**: GitHub Actions runs the suite on all three browsers, type-checks first, and uploads the HTML report and traces.
+
+## Do the tests catch bugs?
+
+As a spot check, I injected five faults into the demo app and ran the suite each time. Every one was caught:
+
+| Injected fault | Caught by |
+|---|---|
+| Loan interest changed from 4% to 5% | repayment-calculation tests (TC-LOAN-001) |
+| Admin permission check removed | access-control tests |
+| Daily limit off by one (`>` became `>=`) | daily-limit boundary test (TC-TRF-008) |
+| Lock-out threshold moved from 3 to 4 attempts | TC-AUTH-005 |
+| Idempotency handling disabled | TC-API-005 |
+
+## Limits
+
+- The suite runs against the bundled demo app only. It shows technique and structure, not a client system.
+- Serial execution (one worker) because the demo app keeps state in memory. A real system would use per-test data and run in parallel.
+- No visual regression, performance or accessibility checks yet.
+
+## Layout
+
+```
+demo-app/        PayVault server and front end (no dependencies)
+src/core/        fixtures and test data
+src/pages/       page objects
+src/tests/       specs (auth, transfers, loans, access-control, api)
+docs/            risk-based testing strategy
+.github/         CI workflow
+```

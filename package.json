@@ -1,14 +1,16 @@
 {
-  "name": "enterprise-qa-automation-portfolio",
-  "version": "1.0.0",
-  "description": "Production-grade Playwright & TypeScript E2E Test Automation Portfolio by Richard Courage Udoh",
+  "name": "qa-automation-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Playwright and TypeScript test automation portfolio: UI, API and access-control tests against a bundled fintech demo app",
   "scripts": {
+    "start:app": "node demo-app/server.js",
     "test": "playwright test",
     "test:smoke": "playwright test --grep @smoke",
     "test:sanity": "playwright test --grep @sanity",
     "test:regression": "playwright test --grep @regression",
-    "test:governance": "playwright test src/modules/governance-hub/tests",
-    "test:headed": "playwright test --headed",
+    "test:api": "playwright test --grep @api",
+    "typecheck": "tsc --noEmit",
     "report": "playwright show-report reports/html"
   },
   "devDependencies": {
@@ -16,16 +18,7 @@
     "@types/node": "^22.0.0",
     "typescript": "^5.7.0"
   },
-  "keywords": [
-    "qa-lead",
-    "playwright",
-    "typescript",
-    "e2e-testing",
-    "page-object-model",
-    "ci-cd",
-    "portfolio",
-    "automation-engineer"
-  ],
-  "author": "Richard Courage Udoh",
+  "keywords": ["playwright", "typescript", "e2e-testing", "api-testing", "page-object-model", "ci-cd", "qa-automation"],
+  "author": "Richard Courage",
   "license": "MIT"
 }
