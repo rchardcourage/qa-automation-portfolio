@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Richard Courage | QA Lead, Fintech and SaaS</title>
+<meta name="description" content="Richard Courage is a QA Lead for fintech and SaaS products where money moves and mistakes cost trust. Risk-based testing, release readiness, API and test automation.">
+<meta property="og:title" content="Richard Courage | QA Lead">
+<meta property="og:description" content="QA Lead for fintech and SaaS products. Risk-based testing, release readiness, API and test automation.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#131313;--bg2:#1b1b1a;--fg:#f4f1ec;--mute:#aaa59c;--line:#34312c;--gold:#d9b878;--gold2:#a8803f;--pass:#7fc89a;--fail:#e07a6e;color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#faf8f4;--bg2:#f0ece4;--fg:#1a1916;--mute:#6b665d;--line:#ddd6c8;--gold:#8f6a2a;--gold2:#6e5020;--pass:#2f7a4d;--fail:#b4463a;color-scheme:light}}
+:root[data-theme="light"]{--bg:#faf8f4;--bg2:#f0ece4;--fg:#1a1916;--mute:#6b665d;--line:#ddd6c8;--gold:#8f6a2a;--gold2:#6e5020;--pass:#2f7a4d;--fail:#b4463a;color-scheme:light}
+:root[data-theme="dark"]{--bg:#131313;--bg2:#1b1b1a;--fg:#f4f1ec;--mute:#aaa59c;--line:#34312c;--gold:#d9b878;--gold2:#a8803f;--pass:#7fc89a;--fail:#e07a6e;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--fg);font:400 17px/1.6 Inter,system-ui,sans-serif;margin:0;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.w{max-width:1040px;margin:0 auto}
+section{padding-block:72px;border-top:1px solid var(--line)}
+.lab{font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 28px}
+h1{font-size:clamp(46px,9vw,104px);line-height:1;letter-spacing:-.035em;font-weight:650;margin:0}
+h1 span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(28px,4.4vw,44px);line-height:1.12;letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance;font-weight:600}
+p{margin:0 0 16px;max-width:65ch}
+.hero{padding-block:72px 64px;position:relative}
+.rule{height:3px;width:min(560px,80%);background:linear-gradient(90deg,var(--gold),transparent);margin:26px 0}
+.sub{font-size:clamp(19px,2.6vw,27px);color:var(--mute);margin:0 0 30px;max-width:30ch}
+.sub b{color:var(--fg);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.chips li{border:1px solid var(--line);padding:8px 14px;border-radius:99px;font-size:14px;color:var(--mute)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);gap:16px;flex-wrap:wrap}
+.nav a{color:var(--mute);text-decoration:none;margin-left:18px}.nav a:hover{color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.stats div{background:var(--bg);padding:26px 22px}
+.stats b{display:block;font-size:clamp(34px,5vw,52px);letter-spacing:-.03em;font-weight:650;color:var(--gold);line-height:1.05}
+.stats small{color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:var(--bg2);border:1px solid var(--line);padding:26px;border-radius:6px;min-width:0}
+.card h3{margin:0 0 10px;font-size:19px;font-weight:600}
+.card p{color:var(--mute);font-size:15.5px;margin:0}
+.gate{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:26px;font:400 14.5px/1.9 'JetBrains Mono',monospace;overflow-x:auto}
+.gate .h{color:var(--mute);letter-spacing:.1em;font-size:12px;text-transform:uppercase;margin-bottom:8px}
+.gate .p{color:var(--pass)}.gate .f{color:var(--fail)}.gate .r{display:flex;gap:14px;white-space:nowrap}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:170px 1fr;gap:12px 32px;padding-block:24px;border-bottom:1px solid var(--line)}
+.tl .d{font:400 13px/1.6 'JetBrains Mono',monospace;color:var(--mute)}
+.tl h3{margin:0 0 4px;font-size:20px;font-weight:600}.tl .o{color:var(--gold);font-size:15px;margin-bottom:8px}
+.tl p{color:var(--mute);font-size:15.5px;margin:0}
+@media(max-width:620px){.tl li{grid-template-columns:1fr}section{padding-block:56px}}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.tools li{background:var(--bg2);border:1px solid var(--line);padding:10px 16px;border-radius:4px;font:500 14px 'JetBrains Mono',monospace}
+.cta{text-align:left;padding-block:88px}
+.cta .btn{display:inline-block;margin-top:14px;padding:15px 26px;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#131313;font-weight:600;text-decoration:none;border-radius:4px}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="nav"><span>Richard Courage</span><span><a href="#work">Approach</a><a href="#path">Experience</a><a href="#stack">Toolkit</a><a href="#contact">Contact</a></span></div>
+
+<header class="hero">
+<p class="lab">QA Lead &middot; Lagos, Nigeria &middot; Open to QA Lead and QA Manager roles</p>
+<h1>Richard <span>Courage</span></h1>
+<div class="rule"></div>
+<p class="sub"><b>QA Lead</b> for fintech and SaaS products where money moves and mistakes cost trust.</p>
+<ul class="chips"><li>Risk-based testing</li><li>Release readiness</li><li>API and test automation</li><li>Payments and wallets</li></ul>
+<div class="stats">
+<div><b>25,000+</b><small>test cases owned across products</small></div>
+<div><b>4+ yrs</b><small>fintech and enterprise SaaS QA</small></div>
+<div><b>10</b><small>person testing function led at GGG</small></div>
+<div><b>30</b><small>validated defects from one independent audit</small></div>
+</div>
+</header>
+
+<section id="work">
+<p class="lab">How I work</p>
+<h2>I do not report how many tests ran. I report whether it is safe to ship.</h2>
+<p>Quality is a trust problem before it is a testing problem. I plan coverage around the places where trust breaks fastest, say what was tested and what was not, and put clear go or no-go criteria in place before the time pressure arrives.</p>
+<div class="grid" style="margin-top:32px">
+<div class="card"><h3>Risk first</h3><p>Payments, identity and money held in escrow get tested before anything else. Effort follows risk, not the order of the backlog.</p></div>
+<div class="card"><h3>Coverage you can explain</h3><p>Leadership hears what was covered, what was left out and why. A coverage plan over a feature list, not a pile of green ticks.</p></div>
+<div class="card"><h3>Release decisions, not hopes</h3><p>Go or no-go criteria agreed up front. I own the call and the evidence behind it.</p></div>
+</div>
+<div class="gate" style="margin-top:20px">
+<div class="h">Example release gate</div>
+<div class="r"><span class="p">PASS</span><span>Money-flow scenarios: wallet, payment, refund</span></div>
+<div class="r"><span class="p">PASS</span><span>Regression on core journeys, API and UI</span></div>
+<div class="r"><span class="p">PASS</span><span>No open high-priority defects on trust-critical flows</span></div>
+<div class="r"><span class="f">HOLD</span><span>Any unexplained gap in coverage on a money flow</span></div>
+</div>
+</section>
+
+<section id="path">
+<p class="lab">Experience</p>
+<h2>From test engineer to owning quality end to end.</h2>
+<ul class="tl">
+<li><div class="d">OCT 2026 &ndash; PRESENT</div><div><h3>QA Lead, GGG</h3><div class="o">Live auction and live shopping marketplace &middot; Remote</div><p>Own quality strategy and go or no-go decisions. Built a coverage plan across 67 features, assure the money flows, and run a distributed 10-person testing function with Playwright automation. An independent exploratory audit surfaced 30 validated defects.</p></div></li>
+<li><div class="d">MAY 2026</div><div><h3>QA Consultant, Workalat</h3><div class="o">Short consulting engagement</div><p>One-week contract, extended to two weeks at the client's request, with flexible hours agreed with the client.</p></div></li>
+<li><div class="d">JUN 2025 &ndash; OCT 2026</div><div><h3>QA Lead, Twikkie</h3><div class="o">Promoted from QA Engineer</div><p>Led QA on a ground-up platform rebuild, managed two QA engineers and ran the test planning and ownership framework for the release.</p></div></li>
+<li><div class="d">SEP 2024 &ndash; JUN 2025</div><div><h3>QA Engineer, Twikkie</h3><div class="o">Fintech platform</div><p>Functional, API and regression testing on money-handling flows, promoted to lead within nine months.</p></div></li>
+<li><div class="d">JUL 2022 &ndash; AUG 2024</div><div><h3>QA Specialist, Renmoney</h3><div class="o">Fintech</div><p>Fintech, wallet and payments QA at scale.</p></div></li>
+</ul>
+</section>
+
+<section id="stack">
+<p class="lab">Toolkit</p>
+<h2>Tools are a means. Judgement is the product.</h2>
+<ul class="tools"><li>Postman</li><li>Playwright</li><li>Cypress</li><li>API testing</li><li>Test strategy</li><li>Risk-based planning</li><li>Defect analysis</li><li>QA reporting</li><li>Jira</li><li>Trello</li></ul>
+<p style="margin-top:28px;color:var(--mute)">Education: B.Sc., National Open University of Nigeria. AI Career Essentials (AiCE), ALX Africa, where I learned to apply AI-assisted techniques to test design, defect analysis and QA reporting.</p>
+</section>
+
+<section id="contact" class="cta">
+<p class="lab">Contact</p>
+<h2>Hiring for quality leadership?</h2>
+<p>I am open to QA Lead, QA Manager and Quality Engineering roles in fintech and SaaS. Message me on LinkedIn.</p>
+<a class="btn" href="https://www.linkedin.com/in/richard-courage" target="_blank" rel="noopener">Connect on LinkedIn</a>
+</section>
+<footer>&copy; 2026 Richard Courage. Client names and product details are shared only where public.</footer>
+</div>
+</body>
+</html>
